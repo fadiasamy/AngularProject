@@ -11,6 +11,8 @@ export class CartComponent implements OnInit{
   cartProducts:any[]=[];
   total:any=0;
   success:boolean=false;
+  token:string=localStorage.getItem("token")||" ";
+  // email:string=localStorage.getItem("email")||" ";
     constructor(private service:CartsService){}
     ngOnInit(): void {
       this.getCartProducts();
@@ -73,13 +75,11 @@ addCart(){
     return {productId:item.item.id,Color:"red"}
   })
   let Model={
-    email:"noran@gmail.com",
-    password:"test1234",
     productId:this.cartProducts[0].item._id,
     color:"red"
 
   };
-  this.service.createNewCart(Model).subscribe(res => {
+  this.service.createNewCart(Model,this.token).subscribe(res => {
      this.success=true;
   })
   console.log(Model);
